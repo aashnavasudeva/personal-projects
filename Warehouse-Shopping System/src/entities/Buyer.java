@@ -1,4 +1,7 @@
+package entities;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Buyer extends User {
 
@@ -6,6 +9,7 @@ public class Buyer extends User {
     private final ArrayList<String> orders;
     private final ArrayList<String> wishlist;
     private final ArrayList<String> complaints;
+    private final HashMap<String, Integer> cart;
 
     /**
      * Constructor for a buyer
@@ -17,37 +21,27 @@ public class Buyer extends User {
         this.orders = new ArrayList<>();
         this.complaints = new ArrayList<>();
         this.wishlist = new ArrayList<>();
+        this.cart = new HashMap<String, Integer>();
     }
 
     public void setAddress(String address){
         this.address = address;
     }
 
-    public void addWishlist(String itemID){
-        wishlist.add(itemID);
+    public ArrayList<String> getWishlist(){
+        return wishlist;
     }
 
-    public void addOrder(String itemID){
-        orders.add(itemID);
-        wishlist.remove(itemID);
+    public ArrayList<String> getComplaints(){
+        return complaints;
     }
 
-    public void removeWishlist(String itemID){
-        wishlist.remove(itemID);
+    public ArrayList<String> getOrders(){
+        return orders;
     }
 
-    public void removeOrders(String itemID){
-        if (orders.contains(itemID)){
-            orders.remove(itemID);
-            wishlist.add(itemID);
-        }
+    public HashMap<String, Integer> getCart(){
+        return cart;
     }
 
-    public void addComplaint(String complaintID){
-        this.complaints.add(complaintID);
-    }
-
-    public void removeComplaint(String complaintID){
-        this.complaints.remove(complaintID);
-    }
 }

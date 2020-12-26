@@ -1,3 +1,5 @@
+package entities;
+
 import java.time.LocalDate;
 
 public class Complaint {
@@ -13,7 +15,7 @@ public class Complaint {
     private String content;
 
     /**
-     * Complaint constructor
+     * Entities.Complaint constructor
      * @param content what the complaint is about
      * @param buyerID the buyer who has lodged the complaint
      * @param sellerID the seller of the item the complaint has been lodged about
@@ -52,5 +54,9 @@ public class Complaint {
      */
     public void setResolved(){
         this.resolved = true;
+    }
+
+    public String getComplaintID(){
+        return this.complaintID;
     }
 }
