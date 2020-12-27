@@ -32,12 +32,14 @@ public class BuyerAccount extends UserAccount {
     }
 
     public void removeComplaint(String username, String complaint) {
-        buyers.get(username).getComplaints().remove(complaint);
+        buyers.get(username).getComplaintsLodged().remove(complaint);
+        complaints.remove(complaint);
     }
 
     public void lodgeComplaint(String complaint, String buyerID, String sellerID, String itemID) {
         Complaint comp = new Complaint(complaint, buyerID, sellerID, itemID);
         complaints.put(comp.getComplaintID(), comp);
+        seller.get(sellerID).getComplaintsAgainst().add(comp.getComplaintID());
     }
 
     public void placeOrder(String buyerID, ArrayList<String> orderItems) {

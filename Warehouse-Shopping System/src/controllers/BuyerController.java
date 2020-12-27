@@ -1,4 +1,5 @@
 package controllers;
+import entities.*;
 import usecases.*;
 
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ public class BuyerController {
     }
 
     public void createAccount(String username, String password){
-        buyerAccount.addUser("buyer", username, password);
+        if (password.length() >= 8){
+            buyerAccount.addUser("buyer", username, password);
+        }
     }
 
     public void callRemoveFromWL(String itemID){
@@ -58,8 +61,10 @@ public class BuyerController {
         for (String s: items.keySet()){
             if (buyerAccount.canOrder(s, items.get(s))){
                 orderItems.add(s);
+                Item curr = buyerAccount.getAllItems().get(s);
                 int currStock = buyerAccount.getAllItems().get(s).getStock();
                 buyerAccount.getAllItems().get(s).setStock(currStock -1);
+                buyerAccount.getSeller().get(curr.getSellerID()).getBuyers().add(this.username);
             }
         }
         if (!orderItems.isEmpty()){
@@ -71,6 +76,46 @@ public class BuyerController {
         if (!buyerAccount.getAllOrders().get(orderID).getShipped()){
             buyerAccount.cancelOrder(this.username, orderID);
         }
+    }
+
+    public void changePassword(String oldPass, String newPass){
+        if (!oldPass.equals(newPass) && newPass.length() >= 8){
+            buyerAccount.changePassword(this.username, newPass);
+        }
+    }
+
+    public void viewAllItems(){
+
+    }
+
+    public String viewCart(){
+        StringBuilder output = new StringBuilder();
+        Buyer buyer = buyerAccount.getBuyers().get(username);
+        for (String itemID: buyer.getCart().keySet()){
+            Item curr = buyerAccount.getAllItems().get(itemID);
+            output.append("Item Name: ").append(curr.getItemName()).append(" Amount: ").append(buyer.getCart().get(itemID));
+        }
+        return output.toString();
+    }
+
+    public String viewWishlist(){
+        StringBuilder output = new StringBuilder();
+        Buyer buyer = buyerAccount.getBuyers().get(username);
+        for (String itemID: buyer.getWishlist()){
+            Item curr = buyerAccount.getAllItems().get(itemID);
+            output.append("Item Name: ").append(curr.getItemName());
+        }
+        return output.toString();
+    }
+
+    public String viewComplaintsLodged(){
+        StringBuilder output = new StringBuilder();
+        Buyer buyer = buyerAccount.getBuyers().get(username);
+        for (String compID: buyer.getComplaintsLodged()){
+            Complaint curr = buyerAccount.getComplaints().get(compID);
+            output.append("Complaint: ").append(curr.getComplaintContent()).append(" ");
+        }
+        return output.toString();
     }
 
 

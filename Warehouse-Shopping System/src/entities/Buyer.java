@@ -8,7 +8,6 @@ public class Buyer extends User {
     private String address;
     private final ArrayList<String> orders;
     private final ArrayList<String> wishlist;
-    private final ArrayList<String> complaints;
     private final HashMap<String, Integer> cart;
 
     /**
@@ -19,7 +18,6 @@ public class Buyer extends User {
     public Buyer(String username, String password) {
         super(username, password);
         this.orders = new ArrayList<>();
-        this.complaints = new ArrayList<>();
         this.wishlist = new ArrayList<>();
         this.cart = new HashMap<String, Integer>();
     }
@@ -32,10 +30,6 @@ public class Buyer extends User {
         return wishlist;
     }
 
-    public ArrayList<String> getComplaints(){
-        return complaints;
-    }
-
     public ArrayList<String> getOrders(){
         return orders;
     }
@@ -43,5 +37,6 @@ public class Buyer extends User {
     public HashMap<String, Integer> getCart(){
         return cart;
     }
+
 
 }

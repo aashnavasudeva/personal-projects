@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class User {
 
     private String username;
@@ -7,6 +9,7 @@ public class User {
     private String name;
     private String email;
     private int phNumber;
+    private final ArrayList<String> complaintsLodged;
 
     /**
      * Constructor for a general user
@@ -16,6 +19,7 @@ public class User {
     public User(String username, String password){
         this.username = username;
         this.password = password;
+        this.complaintsLodged = new ArrayList<>();
     }
 
     /**
@@ -89,5 +93,9 @@ public class User {
      */
     public int getPhNumber(){
         return this.phNumber;
+    }
+
+    public ArrayList<String> getComplaintsLodged(){
+        return complaintsLodged;
     }
 }

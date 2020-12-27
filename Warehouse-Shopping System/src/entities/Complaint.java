@@ -9,8 +9,8 @@ public class Complaint {
     private LocalDate dateIssued;
     private boolean resolved;
     private LocalDate dateResolved;
-    private String buyerID;
-    private String sellerID;
+    private String complainer;
+    private String complainAbout;
     private String itemID;
     private String content;
 
@@ -21,12 +21,12 @@ public class Complaint {
      * @param sellerID the seller of the item the complaint has been lodged about
      * @param itemID the item ID of the item the complaint has been lodged about
      */
-    public Complaint(String content, String buyerID, String sellerID, String itemID){
+    public Complaint(String content, String complainer, String complainAbout, String itemID){
         this.complaintID = String.valueOf(counter);
         counter++;
         this.content = content;
-        this.buyerID = buyerID;
-        this.sellerID = sellerID;
+        this.complainer = complainer;
+        this.complainAbout = complainAbout;
         this.itemID = itemID;
         this.dateIssued = LocalDate.now();
         this.resolved = false;
@@ -58,5 +58,9 @@ public class Complaint {
 
     public String getComplaintID(){
         return this.complaintID;
+    }
+
+    public String getComplaintContent(){
+        return this.content;
     }
 }
