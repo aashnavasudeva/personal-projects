@@ -7,6 +7,8 @@ public class Seller extends User{
 
     private Date contractExp;
     private final ArrayList<String> selling = new ArrayList<>();
+    private final ArrayList<String> buyers = new ArrayList<>();
+    private final ArrayList<String> complaintsAgainst = new ArrayList<>();
     /**
      * Constructor for a seller
      * @param username the username of the seller
@@ -14,22 +16,6 @@ public class Seller extends User{
      */
     public Seller(String username, String password) {
         super(username, password);
-    }
-
-    /**
-     * Void method that adds items to the list of items the seller sells
-     * @param itemID the item's ID that is to be sold
-     */
-    public void addItemsToSell(String itemID){
-        selling.add(itemID);
-    }
-
-    /**
-     * Void method that removes an item from the list of items being sold
-     * @param itemID the item's ID that is to be removed
-     */
-    public void deleteItemsToSell(String itemID){
-        selling.remove(itemID);
     }
 
     /**
@@ -55,5 +41,14 @@ public class Seller extends User{
     public ArrayList<String> getSelling(){
         return this.selling;
     }
+
+    public ArrayList<String> getBuyers(){
+        return this.buyers;
+    }
+
+    public ArrayList<String> getComplaintsAgainst(){
+        return complaintsAgainst;
+    }
+
 
 }
