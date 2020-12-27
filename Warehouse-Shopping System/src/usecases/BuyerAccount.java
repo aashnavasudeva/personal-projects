@@ -32,7 +32,7 @@ public class BuyerAccount extends UserAccount {
     }
 
     public void removeComplaint(String username, String complaint) {
-        buyers.get(username).getComplaintsLodged().remove(complaint);
+        buyers.get(username).getComplaints().remove(complaint);
         complaints.remove(complaint);
     }
 

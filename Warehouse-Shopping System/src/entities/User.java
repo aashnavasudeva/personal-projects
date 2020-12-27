@@ -9,7 +9,9 @@ public class User {
     private String name;
     private String email;
     private int phNumber;
-    private final ArrayList<String> complaintsLodged;
+    //for buyers and sellers, these are the complaints they have lodged
+    //for admin, this is the complaints they have received from buyers
+    private final ArrayList<String> complaints;
 
     /**
      * Constructor for a general user
@@ -19,7 +21,7 @@ public class User {
     public User(String username, String password){
         this.username = username;
         this.password = password;
-        this.complaintsLodged = new ArrayList<>();
+        this.complaints = new ArrayList<>();
     }
 
     /**
@@ -95,7 +97,7 @@ public class User {
         return this.phNumber;
     }
 
-    public ArrayList<String> getComplaintsLodged(){
-        return complaintsLodged;
+    public ArrayList<String> getComplaints(){
+        return complaints;
     }
 }

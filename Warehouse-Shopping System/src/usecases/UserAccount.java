@@ -77,11 +77,19 @@ public class UserAccount {
         return buyers;
     }
 
+    public HashMap<String, Admin> getAdmin(){
+        return admin;
+    }
+
     public HashMap<String, Complaint> getComplaints(){
         return complaints;
     }
 
     public HashMap<String, Order> getAllOrders(){
         return allOrders;
+    }
+
+    public HashMap<String, User> getAllUsers(){
+        return allUsers;
     }
 }

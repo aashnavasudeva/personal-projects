@@ -34,7 +34,7 @@ public class SellerController {
     }
 
     public void createSellerAccount(String username, String password){
-        if (password.length() >= 8) {
+        if (password.length() >= 8 && !sellerAccount.getAllUsers().containsKey(username)) {
             sellerAccount.addUser("seller", username, password);
         }
     }
@@ -53,7 +53,7 @@ public class SellerController {
         return output.toString();
     }
 
-    public String viewComplaints(){
+    public String viewComplaintsAgainst(){
         StringBuilder output = new StringBuilder();
         for (String complaint: sellerAccount.getSeller().get(this.username).getComplaintsAgainst()){
             output.append("Complaint: ").append(sellerAccount.getComplaints().get(complaint).getComplaintContent());

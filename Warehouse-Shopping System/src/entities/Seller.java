@@ -9,6 +9,7 @@ public class Seller extends User{
     private final ArrayList<String> selling = new ArrayList<>();
     private final ArrayList<String> buyers = new ArrayList<>();
     private final ArrayList<String> complaintsAgainst = new ArrayList<>();
+    private final ArrayList<String> messageReceived = new ArrayList<>();
     /**
      * Constructor for a seller
      * @param username the username of the seller
@@ -50,5 +51,7 @@ public class Seller extends User{
         return complaintsAgainst;
     }
 
-
+    public ArrayList<String> getMessageReceived(){
+        return messageReceived;
+    }
 }

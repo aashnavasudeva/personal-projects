@@ -9,6 +9,7 @@ public class Buyer extends User {
     private final ArrayList<String> orders;
     private final ArrayList<String> wishlist;
     private final HashMap<String, Integer> cart;
+    private final ArrayList<String> messageReceived;
 
     /**
      * Constructor for a buyer
@@ -20,6 +21,7 @@ public class Buyer extends User {
         this.orders = new ArrayList<>();
         this.wishlist = new ArrayList<>();
         this.cart = new HashMap<String, Integer>();
+        this.messageReceived = new ArrayList<>();
     }
 
     public void setAddress(String address){
@@ -36,6 +38,10 @@ public class Buyer extends User {
 
     public HashMap<String, Integer> getCart(){
         return cart;
+    }
+
+    public ArrayList<String> getMessageReceived(){
+        return messageReceived;
     }
 
 

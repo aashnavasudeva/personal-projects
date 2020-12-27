@@ -15,7 +15,7 @@ public class BuyerController {
     }
 
     public void createAccount(String username, String password){
-        if (password.length() >= 8){
+        if (password.length() >= 8 && !buyerAccount.getAllUsers().containsKey(username)){
             buyerAccount.addUser("buyer", username, password);
         }
     }
@@ -84,10 +84,6 @@ public class BuyerController {
         }
     }
 
-    public void viewAllItems(){
-
-    }
-
     public String viewCart(){
         StringBuilder output = new StringBuilder();
         Buyer buyer = buyerAccount.getBuyers().get(username);
@@ -111,9 +107,17 @@ public class BuyerController {
     public String viewComplaintsLodged(){
         StringBuilder output = new StringBuilder();
         Buyer buyer = buyerAccount.getBuyers().get(username);
-        for (String compID: buyer.getComplaintsLodged()){
+        for (String compID: buyer.getComplaints()){
             Complaint curr = buyerAccount.getComplaints().get(compID);
             output.append("Complaint: ").append(curr.getComplaintContent()).append(" ");
+        }
+        return output.toString();
+    }
+
+    public String viewAllItems(){
+        StringBuilder output = new StringBuilder();
+        for (Item item: buyerAccount.getAllItems().values()){
+            output.append("Name: ").append(item.getItemName()).append("Stock: ").append(item.getStock()).append(" ");
         }
         return output.toString();
     }
