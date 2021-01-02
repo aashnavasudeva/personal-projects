@@ -15,73 +15,98 @@ public class Gateway {
 
     public ArrayList<User> readUsers(String path) throws ClassNotFoundException, IOException {
         ArrayList<User> users = new ArrayList<>();
-        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
-        Object obj;
-        while (true) {
-            try {
-                obj = inputStream.readObject();
-                users.add((User) obj);
-            } catch (EOFException ex) {
-                break;
+        File file = new File(path);
+        if (file.length() != 0) {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
+            Object obj;
+            while (true) {
+                try {
+                    obj = inputStream.readObject();
+                    users.add((User) obj);
+                } catch (EOFException ex) {
+                    break;
+                }
             }
+            inputStream.close();
+            return users;
         }
-        inputStream.close();
-        return users;
+        else{
+            return new ArrayList<>();
+        }
     }
+
 
 
     public ArrayList<Complaint> readComplaints(String path) throws IOException {
         ArrayList<Complaint> complaints = new ArrayList<>();
-        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
-        Object obj;
-        while (true) {
-            try {
-                obj = inputStream.readObject();
-                complaints.add((Complaint) obj);
-            } catch (EOFException ex) {
-                break;
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        File file = new File(path);
+        if (file.length() != 0) {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
+            Object obj;
+            while (true) {
+                try {
+                    obj = inputStream.readObject();
+                    complaints.add((Complaint) obj);
+                } catch (EOFException ex) {
+                    break;
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
+            inputStream.close();
+            return complaints;
         }
-        inputStream.close();
-        return complaints;
+        else{
+            return new ArrayList<>();
+        }
     }
 
     public ArrayList<Item> readItems(String path) throws IOException {
         ArrayList<Item> items = new ArrayList<>();
-        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
-        Object obj;
-        while (true) {
-            try {
-                obj = inputStream.readObject();
-                items.add((Item) obj);
-            } catch (EOFException ex) {
-                break;
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        File file = new File(path);
+        if (file.length() != 0) {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
+            Object obj;
+            while (true) {
+                try {
+                    obj = inputStream.readObject();
+                    items.add((Item) obj);
+                } catch (EOFException ex) {
+                    break;
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
+            inputStream.close();
+            return items;
         }
-        inputStream.close();
-        return items;
+        else{
+            return new ArrayList<>();
+        }
     }
 
     public ArrayList<Order> readOrders(String path) throws IOException {
         ArrayList<Order> orders = new ArrayList<>();
-        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
-        Object obj;
-        while (true) {
-            try {
-                obj = inputStream.readObject();
-                orders.add((Order) obj);
-            } catch (EOFException ex) {
-                break;
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+        File file = new File(path);
+        if (file.length() != 0) {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
+            Object obj;
+            while (true) {
+                try {
+                    obj = inputStream.readObject();
+                    orders.add((Order) obj);
+                } catch (EOFException ex) {
+                    break;
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
+            inputStream.close();
+            return orders;
         }
-        inputStream.close();
-        return orders;
+        else{
+            return new ArrayList<>();
+        }
     }
 
     public void writeToFile(String path) throws IOException {

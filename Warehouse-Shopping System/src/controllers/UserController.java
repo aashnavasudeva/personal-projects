@@ -5,6 +5,7 @@ import entities.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class UserController {
     private final BuyerAccount bA = new BuyerAccount();
@@ -13,23 +14,74 @@ public class UserController {
     private final UserAccount uA = new UserAccount();
     private final Gateway g = new Gateway();
 
-    public boolean login(String username, String password) throws IOException, ClassNotFoundException {
-        populateOrdersItemsComplaints();
+    public void mainMenu() throws IOException, ClassNotFoundException {
+        System.out.println("1. Create buyer account\n" +
+                "2. Login\n" +
+                "3. Exit");
         populateUserMaps();
+        populateOrdersItemsComplaints();
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        while (!input.equals("3")) {
+            switch (input) {
+                case "1": {
+                    System.out.println("Enter un");
+                    String un = sc.nextLine();
+                    System.out.println("pw");
+                    String pw = sc.nextLine();
+                    bA.addUser("buyer", un, pw);
+                    System.out.println("Account created! Returning to main menu...");
+                    mainMenu();
+                    break;
+                }
+                case "2": {
+                    System.out.println("Enter un");
+                    String un = sc.nextLine();
+                    System.out.println("pw");
+                    String pw = sc.nextLine();
+                    if (bA.getBuyers().isEmpty()){
+                        System.out.println("no buyers");
+                    }
+
+                    if (login(un, pw)) {
+                        System.out.println("Log in successful");
+                    }
+                    else{
+                        System.out.println("no");
+                    }
+                    break;
+                }
+            }
+        }
+        logout();
+    }
+    public boolean login(String username, String password) throws IOException, ClassNotFoundException {
+        boolean done = false;
         if (bA.getBuyers().containsKey(username)){
-            return bA.getBuyers().get(username).getPassword().equals(password);
+            if (bA.getBuyers().get(username).getPassword().equals(password)){
+                done = true;
+            }
         }
         else if (sA.getSeller().containsKey(username)){
-            return sA.getSeller().get(username).getPassword().equals(password);
+            if (sA.getSeller().get(username).getPassword().equals(password)){
+                done = true;
+            }
         }
         else if (aA.getAdmin().containsKey(username)){
-            return aA.getAdmin().get(username).getPassword().equals(password);
+            if (aA.getAdmin().get(username).getPassword().equals(password)){
+                done = true;
+            }
+        }
+        if (done){
+            System.out.println("Done");
+            return true;
         }
         return false;
+
     }
 
     public void populateUserMaps() throws IOException, ClassNotFoundException {
-        ArrayList<User> users = g.readUsers("./Warehouse-Shopping System/src/users.ser");
+        ArrayList<User> users = g.readUsers("./Warehouse-Shopping System/User.ser");
         for (User u: users){
             if(u.getClass().getName().equalsIgnoreCase("buyer")){
                 bA.getBuyers().put(u.getUsername(), (Buyer) u);
@@ -45,15 +97,15 @@ public class UserController {
     }
 
     public void populateOrdersItemsComplaints() throws IOException{
-        ArrayList<Order> orders = g.readOrders("./Warehouse-Shopping System/src/orders.ser");
+        ArrayList<Order> orders = g.readOrders("./Warehouse-Shopping System/orders.ser");
         for (Order o: orders){
             uA.getAllOrders().put(o.getOrderID(), o);
         }
-        ArrayList<Item> items = g.readItems("./Warehouse-Shopping System/src/items.ser");
+        ArrayList<Item> items = g.readItems("./Warehouse-Shopping System/items.ser");
         for (Item item: items){
             uA.getAllItems().put(item.getItemID(), item);
         }
-        ArrayList<Complaint> comp = g.readComplaints("./Warehouse-Shopping System/src/complaints.ser");
+        ArrayList<Complaint> comp = g.readComplaints("./Warehouse-Shopping System/complaints.ser");
         for (Complaint c: comp){
             uA.getComplaints().put(c.getComplaintID(), c);
         }

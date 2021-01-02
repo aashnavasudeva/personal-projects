@@ -25,17 +25,17 @@ public class UserAccount {
      * @param password the account's password
      */
     public void addUser(String type, String username, String password){
-        if (type.equalsIgnoreCase("Entities.Buyer")){
+        if (type.equalsIgnoreCase("buyer")){
             Buyer b = new Buyer(username, password);
             buyers.put(username, b);
             allUsers.put(username, b);
         }
-        else if (type.equalsIgnoreCase("Entities.Seller")){
+        else if (type.equalsIgnoreCase("seller")){
             Seller s = new Seller(username, password);
             seller.put(username, s);
             allUsers.put(username, s);
         }
-        else if (type.equalsIgnoreCase("Entities.Admin")){
+        else if (type.equalsIgnoreCase("admin")){
             Admin a = new Admin(username, password);
             admin.put(username, a);
             allUsers.put(username, a);
