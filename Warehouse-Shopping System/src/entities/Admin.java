@@ -1,6 +1,10 @@
 package entities;
 
+import java.util.ArrayList;
+
 public class Admin extends User{
+
+    private ArrayList<String> messagesSent = new ArrayList<>();
 
     /**
      * Constructor for an admin user
@@ -9,5 +13,9 @@ public class Admin extends User{
      */
     public Admin(String username, String password) {
         super(username, password);
+    }
+
+    public ArrayList<String> getMessagesSent(){
+        return messagesSent;
     }
 }

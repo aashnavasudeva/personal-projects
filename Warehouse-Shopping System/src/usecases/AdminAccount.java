@@ -5,12 +5,14 @@ public class AdminAccount extends UserAccount {
 
     public AdminAccount(){}
 
-    public void messageUser(String userID, String message){
+    public void messageUser(String adminID, String userID, String message){
         if (buyers.containsKey(userID)){
             buyers.get(userID).getMessageReceived().add(message);
+            admin.get(adminID).getMessagesSent().add(message);
         }
         else if (seller.containsKey(userID)){
             seller.get(userID).getMessageReceived().add(message);
+            admin.get(adminID).getMessagesSent().add(message);
         }
     }
 

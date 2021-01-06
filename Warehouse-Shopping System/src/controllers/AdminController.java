@@ -24,7 +24,7 @@ public class AdminController {
 
     public void callMessageUser(String userID, String message){
         if (adminAccount.getAllUsers().containsKey(userID) && !message.equals("")){
-            adminAccount.messageUser(userID, message);
+            adminAccount.messageUser(this.username, userID, message);
         }
     }
 
