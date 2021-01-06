@@ -63,4 +63,12 @@ public class Complaint {
     public String getComplaintContent(){
         return this.content;
     }
+
+    public String getComplainer(){
+        return complainer;
+    }
+
+    public String getComplainAbout(){
+        return complainAbout;
+    }
 }

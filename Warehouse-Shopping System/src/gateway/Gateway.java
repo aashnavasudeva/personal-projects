@@ -13,27 +13,80 @@ public class Gateway {
     public Gateway() {
     }
 
-    public ArrayList<User> readUsers(String path) throws ClassNotFoundException, IOException {
-        ArrayList<User> users = new ArrayList<>();
+    public HashMap<String, User> readFromFile(String path){
+        HashMap<String, User> map = null;
         File file = new File(path);
-        if (file.length() != 0) {
-            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
-            Object obj;
-            while (true) {
-                try {
-                    obj = inputStream.readObject();
-                    users.add((User) obj);
-                } catch (EOFException ex) {
-                    break;
-                }
+        if (file.length()!=0) {
+            try {
+                FileInputStream fis = new FileInputStream(path);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                map = (HashMap<String, User>) ois.readObject();
+                ois.close();
+                fis.close();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            } catch (ClassNotFoundException c) {
+                System.out.println("Class not found");
+                c.printStackTrace();
             }
-            inputStream.close();
-            return users;
+            return map;
         }
         else{
-            return new ArrayList<>();
+            return new HashMap<String, User>();
         }
     }
+
+    public HashMap<String, User> readUsers(String path) throws ClassNotFoundException, IOException {
+        HashMap<String, User> map = null;
+        File file = new File(path);
+            try {
+                InputStream file1 = new FileInputStream(path);
+                InputStream buffer = new BufferedInputStream(file1);
+                ObjectInput input = new ObjectInputStream(buffer);
+
+                // deserialize the StudentManager
+                HashMap<String, User> sm = (HashMap<String, User>) input.readObject();
+                input.close();
+                return sm;
+            } catch (IOException ex) {
+
+                return new HashMap<String, User>();
+            }
+//            try {
+//                FileInputStream fis = new FileInputStream(path);
+//                ObjectInputStream ois = new ObjectInputStream(fis);
+//                map = (HashMap<String, User>) ois.readObject();
+//                ois.close();
+//                fis.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            } catch (ClassNotFoundException c) {
+//                System.out.println("Class not found");
+//                c.printStackTrace();
+//            }
+//            return map;
+        }
+
+//        ArrayList<User> users = new ArrayList<>();
+//        File file = new File(path);
+//        if (file.length() != 0) {
+//            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(path));
+//            Object obj;
+//            while (true) {
+//                try {
+//                    obj = inputStream.readObject();
+//                    users.add((User) obj);
+//                } catch (EOFException ex) {
+//                    break;
+//                }
+//            }
+//            inputStream.close();
+//            return users;
+//        }
+//        else{
+//            return new ArrayList<>();
+//        }
+
 
 
 
@@ -110,30 +163,29 @@ public class Gateway {
     }
 
     public void writeToFile(String path) throws IOException {
-        OutputStream file = new FileOutputStream(path);
-        OutputStream buffer = new BufferedOutputStream(file);
-        ObjectOutput output = new ObjectOutputStream(buffer);
-        if (path.contains("user")){
-            for (User user: userAccount.getAllUsers().values()){
-                output.writeObject(user);
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(path);
+            ObjectOutputStream outputStream = new ObjectOutputStream(fileOutputStream);
+            if (path.contains("user")) {
+                outputStream.writeObject(userAccount.getAllUsers());
+                outputStream.close();
             }
-        }
-        else if (path.contains("complaint")){
-            for (Complaint c: userAccount.getComplaints().values()){
-                output.writeObject(c);
+            else if (path.contains("item")) {
+                outputStream.writeObject(userAccount.getAllItems());
+                outputStream.close();
             }
-        }
-        else if (path.contains("item")){
-            for (Item i: userAccount.getAllItems().values()){
-                output.writeObject(i);
+            else if (path.contains("complaint")) {
+                outputStream.writeObject(userAccount.getComplaints());
+                outputStream.close();
             }
-        }
-        else if (path.contains("order")){
-            for (Order o: userAccount.getAllOrders().values()){
-                output.writeObject(o);
+            else if (path.contains("order")) {
+                outputStream.writeObject(userAccount.getAllOrders());
+                outputStream.close();
             }
+            fileOutputStream.close();
+        }catch(IOException ioe) {
+            ioe.printStackTrace();
         }
-        output.close();
     }
 
 

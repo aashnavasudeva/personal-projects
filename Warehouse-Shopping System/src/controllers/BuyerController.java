@@ -2,7 +2,6 @@ package controllers;
 import entities.*;
 import usecases.*;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class BuyerController {
@@ -27,8 +26,7 @@ public class BuyerController {
     }
 
     public void callAddToWL(String itemID){
-        if (!buyerAccount.getBuyers().get(username).getWishlist().contains(itemID) &&
-                buyerAccount.getAllItems().containsKey(itemID)){
+        if (!buyerAccount.getBuyers().get(username).getWishlist().contains(itemID) && buyerAccount.getAllItems().containsKey(itemID)){
             buyerAccount.addToWishlist(this.username, itemID);
         }
     }
@@ -57,13 +55,13 @@ public class BuyerController {
     }
 
     public void callPlaceOrder(HashMap<String, Integer> items){
-        ArrayList<String> orderItems = new ArrayList<>();
+        HashMap<String, Integer> orderItems = new HashMap<>();
         for (String s: items.keySet()){
             if (buyerAccount.canOrder(s, items.get(s))){
-                orderItems.add(s);
+                orderItems.put(s, items.get(s));
                 Item curr = buyerAccount.getAllItems().get(s);
                 int currStock = buyerAccount.getAllItems().get(s).getStock();
-                buyerAccount.getAllItems().get(s).setStock(currStock -1);
+                buyerAccount.getAllItems().get(s).setStock(currStock -items.get(s));
                 buyerAccount.getSeller().get(curr.getSellerID()).getBuyers().add(this.username);
             }
         }

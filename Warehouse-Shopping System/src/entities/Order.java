@@ -1,15 +1,16 @@
 package entities;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Order {
     private String orderID;
-    private ArrayList<String> items;
+    private HashMap<String, Integer> items;
     private String buyerID;
     private int counter;
     private boolean shipped;
 
-    public Order(String buyerID, ArrayList<String> items){
+    public Order(String buyerID, HashMap<String, Integer> items){
         this.buyerID = buyerID;
         this.items = items;
         this.orderID = String.valueOf(counter);
@@ -24,7 +25,7 @@ public class Order {
         return buyerID;
     }
 
-    public ArrayList<String> getItems(){
+    public HashMap<String, Integer> getItems(){
         return items;
     }
 

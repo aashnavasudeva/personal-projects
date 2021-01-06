@@ -2,7 +2,7 @@ package usecases;
 
 import entities.*;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class BuyerAccount extends UserAccount {
 
@@ -31,20 +31,24 @@ public class BuyerAccount extends UserAccount {
 
     }
 
-    public void removeComplaint(String username, String complaint) {
-        buyers.get(username).getComplaints().remove(complaint);
-        complaints.remove(complaint);
+    public void removeComplaint(String username, String complaintID) {
+        buyers.get(username).getComplaints().remove(complaintID);
+        Complaint comp = complaints.get(complaintID);
+        seller.get(comp.getComplainAbout()).getComplaintsAgainst().remove(comp.getComplaintID());
+        complaints.remove(complaintID);
     }
 
     public void lodgeComplaint(String complaint, String buyerID, String sellerID, String itemID) {
         Complaint comp = new Complaint(complaint, buyerID, sellerID, itemID);
         complaints.put(comp.getComplaintID(), comp);
         seller.get(sellerID).getComplaintsAgainst().add(comp.getComplaintID());
+        buyers.get(buyerID).getComplaints().add(comp.getComplaintID());
     }
 
-    public void placeOrder(String buyerID, ArrayList<String> orderItems) {
+    public void placeOrder(String buyerID, HashMap<String, Integer> orderItems) {
         Order curr = new Order(buyerID, orderItems);
         allOrders.put(curr.getOrderID(), curr);
+        buyers.get(buyerID).getOrders().add(curr.getOrderID());
     }
 
     public boolean canOrder(String itemID, int amount) {
@@ -52,12 +56,10 @@ public class BuyerAccount extends UserAccount {
     }
 
     public void cancelOrder(String buyerID, String orderID) {
+        for (String order : allOrders.get(orderID).getItems().keySet()) {
+            allItems.get(order).setStock(allItems.get(order).getStock() + allOrders.get(orderID).getItems().get(order));
+        }
         allOrders.remove(orderID);
         buyers.get(buyerID).getOrders().remove(orderID);
-
-        for (String order : allOrders.get(orderID).getItems()) {
-            allItems.get(order).setStock(allItems.get(order).getStock() + 1);
-
-        }
     }
 }

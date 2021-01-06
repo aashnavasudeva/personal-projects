@@ -23,13 +23,14 @@ public class SellerAccount extends UserAccount {
     }
 
     public void removeComplaint(String username, String complaint) {
-        seller.get(username).getComplaintsAgainst().remove(complaint);
+        seller.get(username).getComplaints().remove(complaint);
         complaints.remove(complaint);
     }
 
     public void lodgeComplaint(String complaint, String sellerID, String itemID) {
         Complaint comp = new Complaint(complaint, sellerID, "Seller Complaint", itemID);
         complaints.put(comp.getComplaintID(), comp);
+        seller.get(sellerID).getComplaints().add(comp.getComplaintID());
     }
 
 
